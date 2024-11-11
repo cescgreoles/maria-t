@@ -1,3 +1,6 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -8,102 +11,154 @@ type ProjectPageProps = {
   };
 };
 
-export default async function ProjectPage({ params }: ProjectPageProps) {
-  // Esperar a que los parámetros estén disponibles
-  const { year, projectId } = params;
+export default function ProjectPage({ params }: ProjectPageProps) {
+  const [resolvedParams, setResolvedParams] = useState<{
+    year: string;
+    projectId: string;
+  } | null>(null);
 
-  // Definir el número de imágenes por proyecto
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    const fetchParams = async () => {
+      const resolved = await params;
+      setResolvedParams(resolved);
+    };
+
+    fetchParams();
+  }, [params]);
+
+  if (!resolvedParams) {
+    return <div>Loading...</div>;
+  }
+
+  const { year, projectId } = resolvedParams;
+
   const projectImages: Record<string, Record<string, number>> = {
-    "2016": {
-      "1": 5, // Proyecto 1 del año 2016 tiene 5 imágenes
-      "2": 3, // Proyecto 2 del año 2016 tiene 3 imágenes
-      "3": 4, // Proyecto 3 del año 2016 tiene 4 imágenes
-    },
-    "2020": {
-      "1": 4, // Proyecto 1 del año 2020 tiene 2 imágenes
-      "2": 6, // Proyecto 2 del año 2020 tiene 3 imágenes
-      "3": 3, // Proyecto 3 del año 2020 tiene 4 imágenes
-    },
+    "2016": { "1": 5, "2": 3, "3": 4 },
+    "2020": { "1": 4, "2": 6, "3": 3 },
     "2021": {
-      "1": 4, // Proyecto 1 del año 2021 tiene 4 imágenes
-      "2": 4, // Proyecto 2 del año 2021 tiene 2 imágenes
-      "3": 5, // Proyecto 3 del año 2021 tiene 5 imágenes
-      "4": 8, // Proyecto 4 del año 2021 tiene 3 imágenes
-      "5": 6, // Proyecto 5 del año 2021 tiene 4 imágenes
-      "6": 6, // Proyecto 6 del año 2021 tiene 5 imágenes
-      "7": 5, // Proyecto 7 del año 2021 tiene 4 imágenes
-      "8": 3, // Proyecto 8 del año 2021 tiene 3 imágenes
-      "9": 5, // Proyecto 9 del año 2021 tiene 2 imágenes
+      "1": 4,
+      "2": 4,
+      "3": 5,
+      "4": 8,
+      "5": 6,
+      "6": 6,
+      "7": 5,
+      "8": 3,
+      "9": 5,
     },
-    "2022": {
-      "1": 4, // Proyecto 1 del año 2022 tiene 3 imágenes
-      "2": 4, // Proyecto 2 del año 2022 tiene 4 imágenes
-      "3": 3, // Proyecto 3 del año 2022 tiene 5 imágenes
-      "4": 3, // Proyecto 4 del año 2022 tiene 4 imágenes
-      "5": 4, // Proyecto 5 del año 2022 tiene 3 imágenes
-    },
-    "2023": {
-      "1": 5, // Proyecto 1 del año 2023 tiene 2 imágenes
-      "2": 4, // Proyecto 2 del año 2023 tiene 3 imágenes
-    },
-    "2024": {
-      "1": 5, // Proyecto 1 del año 2024 tiene 5 imágenes
-      "2": 2, // Proyecto 2 del año 2024 tiene 4 imágenes
-      "3": 3, // Proyecto 3 del año 2024 tiene 3 imágenes
-      "4": 6, // Proyecto 4 del año 2024 tiene 2 imágenes
-      "5": 3, // Proyecto 5 del año 2024 tiene 3 imágenes
-      "6": 4, // Proyecto 6 del año 2024 tiene 4 imágenes
-      "7": 3, // Proyecto 7 del año 2024 tiene 5 imágenes
-      "8": 3, // Proyecto 8 del año 2024 tiene 4 imágenes
-    },
+    "2022": { "1": 4, "2": 4, "3": 3, "4": 3, "5": 4 },
+    "2023": { "1": 5, "2": 4 },
+    "2024": { "1": 5, "2": 2, "3": 3, "4": 6, "5": 3, "6": 4, "7": 3, "8": 3 },
   };
 
-  // Obtener el número de imágenes del proyecto actual
   const projectImageCount = projectImages[year]?.[projectId] || 0;
 
-  // Si no hay imágenes disponibles para este proyecto, mostrar un mensaje de error
   if (projectImageCount === 0) {
     return (
       <div className="text-center py-10">
         <h2 className="text-3xl font-semibold">No hay imágenes disponibles</h2>
         <Link href={`/${year}`} className="text-blue-500 hover:underline">
-          Regresar a los proyectos del año {year}
+          Volver a los proyectos del año {year}
         </Link>
       </div>
     );
   }
 
-  // Crear las rutas de las imágenes dinámicamente
   const images = Array.from(
     { length: projectImageCount },
     (_, index) => `${index + 1}.webp`
   );
 
+  const goToNext = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+  };
+
+  const goToPrevious = () => {
+    setCurrentIndex(
+      (prevIndex) => (prevIndex - 1 + images.length) % images.length
+    );
+  };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
-    <main className="container mx-auto py-10">
-      <h2 className="text-3xl font-semibold text-center mb-10">
-        Proyecto {projectId} del Año {year}
-      </h2>
+    <main className="container mx-auto py-10 px-4">
+      <div className="flex justify-between items-center mb-6 flex-wrap">
+        <div className="flex items-center space-x-4 mb-4 sm:mb-0">
+          <Image
+            src="/logo.png"
+            alt="Logo de Proyectos"
+            width={40}
+            height={40}
+            className="opacity-90"
+          />
+          <h2 className="text-3xl font-semibold text-white">
+            {year} - P-{projectId}
+          </h2>
+        </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-        {images.map((image, index) => (
-          <div key={index} className="flex justify-center">
-            <Image
-              src={`/image/${year}/${projectId}/${index + 1}.webp`} // Ruta dinámica de las imágenes
-              alt={`Imagen ${index + 1} del proyecto ${projectId}`}
-              width={300}
-              height={200}
-              className="rounded-lg"
-            />
-          </div>
-        ))}
+        <div>
+          <Link
+            href="/"
+            className="text-white uppercase text-lg hover:underline"
+          >
+            VOLVER
+          </Link>
+        </div>
       </div>
 
-      <div className="mt-10 text-center">
-        <Link href={`/${year}`} className="text-blue-500 hover:underline">
-          Regresar a los proyectos del año {year}
-        </Link>
+      {/* Imagen actual */}
+      <div className="relative mb-10">
+        <div className="flex justify-center">
+          <Image
+            src={`/image/${year}/${projectId}/${images[currentIndex]}`}
+            alt={`Imagen ${currentIndex + 1} del proyecto ${projectId}`}
+            width={600}
+            height={400}
+            className="rounded-lg cursor-pointer"
+            onClick={openModal} // Activar modal al hacer clic
+          />
+        </div>
+
+        {/* Botones de navegación */}
+        <button
+          onClick={goToPrevious}
+          className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-black text-white p-2 rounded-full md:p-3 md:text-2xl"
+        >
+          {"<"}
+        </button>
+        <button
+          onClick={goToNext}
+          className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-black text-white p-2 rounded-full md:p-3 md:text-2xl"
+        >
+          {">"}
+        </button>
       </div>
+
+      {/* Modal para imagen en pantalla completa */}
+      {isModalOpen && (
+        <div
+          className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 flex justify-center items-center z-50"
+          onClick={closeModal} // Cerrar al hacer clic fuera de la imagen
+        >
+          <Image
+            src={`/image/${year}/${projectId}/${images[currentIndex]}`}
+            alt={`Imagen ${currentIndex + 1} del proyecto ${projectId}`}
+            width={1200}
+            height={800}
+            className="max-w-full max-h-full object-contain"
+          />
+        </div>
+      )}
     </main>
   );
 }

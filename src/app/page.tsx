@@ -1,35 +1,86 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
   const years = [2016, 2020, 2021, 2022, 2023, 2024];
 
-  return (
-    <main className="min-h-screen bg-gradient-to-r from-indigo-600 via-purple-500 to-pink-500 flex flex-col items-center py-10">
-      <h1 className="text-5xl font-extrabold mb-12 text-white text-shadow-lg">
-        Mis Proyectos
-      </h1>
+  const backgroundImages = ["/image/2016/1/1.webp", "/image/2016/1/2.webp"];
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 px-6">
-        {years.map((year) => (
-          <Link key={year} href={`/${year}`}>
-            <div className="relative group cursor-pointer rounded-xl overflow-hidden bg-white shadow-xl transform transition-all hover:scale-105 hover:shadow-2xl hover:rotate-2">
-              <Image
-                src={`/image/${year}/1/1.webp`}
-                alt={`Proyectos de ${year}`}
-                width={320}
-                height={200}
-                className="w-full h-full object-cover rounded-t-xl transition-all group-hover:opacity-80"
-              />
-              <div className="absolute inset-0 bg-black bg-opacity-25 transition-opacity group-hover:bg-opacity-50"></div>
-              <div className="absolute bottom-0 left-0 right-0 p-4 text-center">
-                <p className="text-2xl font-semibold text-white opacity-0 group-hover:opacity-100 transform transition-all group-hover:translate-y-0 translate-y-4">
-                  {year}
-                </p>
+  const [currentBackground, setCurrentBackground] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentBackground((prev) => (prev + 1) % backgroundImages.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [backgroundImages.length]);
+
+  return (
+    <main className="min-h-screen bg-black flex flex-col relative">
+      <div
+        className="absolute top-0 left-0 right-0 bottom-0 bg-cover bg-center transition-all duration-1000"
+        style={{
+          backgroundImage: `url(${backgroundImages[currentBackground]})`,
+        }}
+      ></div>
+
+      <div className="flex flex-col justify-center items-center z-10 text-white mt-32 px-6 flex-grow">
+        <p className="text-lg sm:text-xl font-light text-center max-w-3xl">
+          Este es un espacio donde podrás explorar los proyectos más destacados
+          de María Torrecillas. Un lugar para la innovación, creatividad y
+          soluciones únicas.
+        </p>
+      </div>
+
+      <div className="flex items-center justify-between px-6 absolute top-6 left-0 right-0 z-10 w-full">
+        <div className="flex items-center space-x-4">
+          <Image
+            src="/logo.png"
+            alt="Logo de María Torrecillas"
+            width={40}
+            height={40}
+          />
+          <h1 className="text-xl sm:text-3xl font-extrabold text-white">
+            MARIA TORRECILLAS
+          </h1>
+        </div>
+
+        <Link
+          href="/contacto"
+          className="text-white text-lg font-medium hover:text-gray-400"
+        >
+          CONTACTO
+        </Link>
+      </div>
+
+      <div className="flex justify-center px-6 mt-32 pb-10 flex-grow">
+        <div className="flex flex-wrap justify-center gap-6 w-full max-w-screen-xl">
+          {years.map((year) => (
+            <Link key={year} href={`/${year}`}>
+              <div className="relative group cursor-pointer rounded-lg overflow-hidden bg-gray-800 shadow-lg transform transition-all hover:scale-105 hover:shadow-xl w-28 sm:w-36 md:w-40">
+                <div className="relative w-full h-32 sm:h-36 md:h-40">
+                  <Image
+                    src={`/image/${year}/1/1.webp`}
+                    alt={`Proyectos de ${year}`}
+                    layout="fill"
+                    objectFit="cover"
+                    className="transition-opacity group-hover:opacity-90"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-black bg-opacity-20 transition-opacity group-hover:bg-opacity-40"></div>
+                <div className="absolute bottom-0 left-0 right-0 p-2 text-center">
+                  <p className="text-lg font-semibold text-white opacity-0 group-hover:opacity-100 transform transition-all group-hover:translate-y-0 translate-y-2">
+                    {year}
+                  </p>
+                </div>
               </div>
-            </div>
-          </Link>
-        ))}
+            </Link>
+          ))}
+        </div>
       </div>
     </main>
   );
