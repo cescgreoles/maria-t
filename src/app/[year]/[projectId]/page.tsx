@@ -1,164 +1,135 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 
-type ProjectPageProps = {
-  params: {
-    year: string;
-    projectId: string;
-  };
-};
-
-export default function ProjectPage({ params }: ProjectPageProps) {
+// Suponiendo que `params` es una promesa
+export default function ProjectPage({
+  params,
+}: {
+  params: Promise<{ year: string; projectId: string }>;
+}) {
   const [resolvedParams, setResolvedParams] = useState<{
     year: string;
     projectId: string;
   } | null>(null);
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // Lista de imágenes del proyecto
+  const [images, setImages] = useState<string[]>([]);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0); // Estado para el índice de la imagen actual
 
+  // Función para comprobar si la imagen existe
+  const checkImageExists = async (imagePath: string) => {
+    try {
+      const response = await fetch(imagePath, {
+        method: "HEAD", // Solo solicitamos los encabezados para no descargar la imagen completa
+      });
+
+      console.log(`Comprobando ${imagePath}:`, response.status);
+
+      return response.ok; // Si la respuesta es 200, la imagen existe
+    } catch (error) {
+      console.error(`Error al comprobar imagen ${imagePath}:`, error);
+      return false; // Si ocurre algún error, asumimos que la imagen no existe
+    }
+  };
+
+  // Usamos useEffect para "desenvolver" la promesa y guardar los valores
   useEffect(() => {
     const fetchParams = async () => {
-      const resolved = await params;
-      setResolvedParams(resolved);
+      const unwrappedParams = await params; // Desenvolvemos la promesa
+      setResolvedParams(unwrappedParams); // Guardamos los valores resueltos
+
+      const { year, projectId } = unwrappedParams;
+      const loadedImages: string[] = [];
+
+      let i = 1;
+      while (true) {
+        const imagePath = `/image/${year}/${projectId}/${i}.webp`;
+
+        // Comprobamos si la imagen existe
+        const imageExists = await checkImageExists(imagePath);
+
+        console.log(`Verificando imagen: ${imagePath}, existe: ${imageExists}`);
+
+        if (!imageExists) {
+          break; // Si no existe la imagen, salimos del bucle
+        }
+
+        loadedImages.push(imagePath);
+        i++;
+      }
+
+      // Actualizamos el estado con las imágenes cargadas
+      setImages(loadedImages);
     };
 
     fetchParams();
   }, [params]);
 
+  // Mientras `resolvedParams` no tenga valores, mostramos un "loading"
   if (!resolvedParams) {
     return <div>Loading...</div>;
   }
 
+  // Ya podemos acceder a `year` y `projectId` de manera segura
   const { year, projectId } = resolvedParams;
 
-  const projectImages: Record<string, Record<string, number>> = {
-    "2016": { "1": 5, "2": 3, "3": 4 },
-    "2020": { "1": 4, "2": 6, "3": 3 },
-    "2021": {
-      "1": 4,
-      "2": 4,
-      "3": 5,
-      "4": 8,
-      "5": 6,
-      "6": 6,
-      "7": 5,
-      "8": 3,
-      "9": 5,
-    },
-    "2022": { "1": 4, "2": 4, "3": 3, "4": 3, "5": 4 },
-    "2023": { "1": 5, "2": 4 },
-    "2024": { "1": 5, "2": 2, "3": 3, "4": 6, "5": 3, "6": 4, "7": 3, "8": 3 },
+  // Función para navegar entre las imágenes
+  const nextImage = () => {
+    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length); // Avanzar a la siguiente imagen
   };
 
-  const projectImageCount = projectImages[year]?.[projectId] || 0;
-
-  if (projectImageCount === 0) {
-    return (
-      <div className="text-center py-10">
-        <h2 className="text-3xl font-semibold">No hay imágenes disponibles</h2>
-        <Link href={`/${year}`} className="text-blue-500 hover:underline">
-          Volver a los proyectos del año {year}
-        </Link>
-      </div>
-    );
-  }
-
-  const images = Array.from(
-    { length: projectImageCount },
-    (_, index) => `${index + 1}.webp`
-  );
-
-  const goToNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-  };
-
-  const goToPrevious = () => {
-    setCurrentIndex(
+  const prevImage = () => {
+    setCurrentImageIndex(
       (prevIndex) => (prevIndex - 1 + images.length) % images.length
-    );
-  };
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
+    ); // Volver a la imagen anterior
   };
 
   return (
-    <main className="container mx-auto py-10 px-4">
-      <div className="flex justify-between items-center mb-6 flex-wrap">
-        <div className="flex items-center space-x-4 mb-4 sm:mb-0">
-          <Image
-            src="/logo.png"
-            alt="Logo de Proyectos"
-            width={40}
-            height={40}
-            className="opacity-90"
-          />
-          <h2 className="text-3xl font-semibold text-white">
-            {year} - P-{projectId}
-          </h2>
+    <main className="text-white">
+      <h1 className="text-3xl font-bold mb-4">
+        Proyecto {projectId} de {year}
+      </h1>
+
+      {/* Carousel */}
+      <div className="relative">
+        <div className="flex justify-center items-center">
+          {/* Imagen principal */}
+          {images.length === 0 ? (
+            <p>No hay imágenes disponibles para este proyecto.</p>
+          ) : (
+            <Image
+              src={images[currentImageIndex]}
+              alt={`Imagen ${currentImageIndex + 1} del Proyecto ${projectId}`}
+              width={800} // Ajusta el tamaño según lo necesites
+              height={500} // Ajusta el tamaño según lo necesites
+              className="rounded-lg shadow-lg"
+            />
+          )}
         </div>
 
-        <div>
-          <Link
-            href="/"
-            className="text-white uppercase text-lg hover:underline"
+        {/* Controles de navegación */}
+        <div className="absolute top-1/2 left-0 right-0 flex justify-between px-4">
+          <button
+            onClick={prevImage}
+            className="text-white text-2xl bg-black bg-opacity-50 p-2 rounded-full hover:bg-opacity-75 transition"
           >
-            VOLVER
-          </Link>
+            &#60;
+          </button>
+          <button
+            onClick={nextImage}
+            className="text-white text-2xl bg-black bg-opacity-50 p-2 rounded-full hover:bg-opacity-75 transition"
+          >
+            &#62;
+          </button>
+        </div>
+
+        {/* Indicador de la imagen */}
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-center text-lg text-white">
+          {currentImageIndex + 1} / {images.length}
         </div>
       </div>
-
-      {/* Imagen actual */}
-      <div className="relative mb-10">
-        <div className="flex justify-center">
-          <Image
-            src={`/image/${year}/${projectId}/${images[currentIndex]}`}
-            alt={`Imagen ${currentIndex + 1} del proyecto ${projectId}`}
-            width={600}
-            height={400}
-            className="rounded-lg cursor-pointer"
-            onClick={openModal} // Activar modal al hacer clic
-          />
-        </div>
-
-        {/* Botones de navegación */}
-        <button
-          onClick={goToPrevious}
-          className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-black text-white p-2 rounded-full md:p-3 md:text-2xl"
-        >
-          {"<"}
-        </button>
-        <button
-          onClick={goToNext}
-          className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-black text-white p-2 rounded-full md:p-3 md:text-2xl"
-        >
-          {">"}
-        </button>
-      </div>
-
-      {/* Modal para imagen en pantalla completa */}
-      {isModalOpen && (
-        <div
-          className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 flex justify-center items-center z-50"
-          onClick={closeModal} // Cerrar al hacer clic fuera de la imagen
-        >
-          <Image
-            src={`/image/${year}/${projectId}/${images[currentIndex]}`}
-            alt={`Imagen ${currentIndex + 1} del proyecto ${projectId}`}
-            width={1200}
-            height={800}
-            className="max-w-full max-h-full object-contain"
-          />
-        </div>
-      )}
     </main>
   );
 }

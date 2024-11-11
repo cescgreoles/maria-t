@@ -1,14 +1,15 @@
+// app/[year]/page.tsx
 import Image from "next/image";
 import Link from "next/link";
 
 type YearProjectsProps = {
   params: {
-    year: string;
+    year: string; // Parámetro dinámico para el año
   };
 };
 
-export default async function YearProjects({ params }: YearProjectsProps) {
-  const { year } = await Promise.resolve(params);
+export default function YearProjects({ params }: YearProjectsProps) {
+  const { year } = params; // Desestructuramos el parámetro year
 
   const yearProjects: Record<string, number> = {
     "2016": 3,
@@ -19,7 +20,7 @@ export default async function YearProjects({ params }: YearProjectsProps) {
     "2024": 8,
   };
 
-  const projectCount = yearProjects[year] || 0;
+  const projectCount = yearProjects[year] || 0; // Obtener la cantidad de proyectos para el año
 
   return (
     <main className="container mx-auto py-10 px-4 sm:px-6 lg:px-8 bg-black text-white">
