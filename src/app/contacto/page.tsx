@@ -20,11 +20,7 @@ export default function ContactPage() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const templateParams = {
-      name,
-      email,
-      message,
-    };
+    const templateParams = { name, email, message };
 
     try {
       await emailjs.send(serviceId, templateId, templateParams, userId);
@@ -39,10 +35,15 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen relative flex items-center justify-center bg-black">
-      {/* Fondo negro completo */}
+    <div
+      className="min-h-screen relative flex items-center justify-center bg-black"
+      style={{
+        backgroundImage: "url('/image/2016/1/1.webp')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
       <header className="absolute top-1 left-1 p-4">
-        {/* Botón para volver */}
         <Link
           href="/"
           className="text-white text-2xl uppercase flex items-center space-x-2"
@@ -54,7 +55,7 @@ export default function ContactPage() {
         </Link>
       </header>
 
-      <div className="bg-black bg-opacity-70 backdrop-blur-sm p-8 rounded-lg shadow-lg max-w-md w-full mx-4 z-10">
+      <div className="bg-black bg-opacity-70 backdrop-blur-md p-8 rounded-lg shadow-lg max-w-md w-full mx-4 z-10">
         <div className="flex justify-center items-center mb-6">
           <Image
             src="/logo.png"
@@ -68,12 +69,11 @@ export default function ContactPage() {
 
         <p className="text-center text-gray-200 mb-6">
           ¿Tienes algún proyecto de fotografía en mente o una consulta? ¡No
-          dudes en escribirme! Estaré encantada de ponerme en contacto contigo
-          lo antes posible.
+          dudes en escribirme!
         </p>
         <p className="text-center text-gray-300 mb-6">
           Agradecería que me escribieras el número del proyecto al cual te
-          refieres para poder darte una respuesta más rápida.
+          refieres.
         </p>
 
         {submitted ? (

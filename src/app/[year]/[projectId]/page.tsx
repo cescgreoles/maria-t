@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
-// Suponiendo que `params` es una promesa
 export default function ProjectPage({
   params,
 }: {
@@ -14,31 +14,23 @@ export default function ProjectPage({
     projectId: string;
   } | null>(null);
 
-  // Lista de imágenes del proyecto
   const [images, setImages] = useState<string[]>([]);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0); // Estado para el índice de la imagen actual
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // Función para comprobar si la imagen existe
   const checkImageExists = async (imagePath: string) => {
     try {
-      const response = await fetch(imagePath, {
-        method: "HEAD", // Solo solicitamos los encabezados para no descargar la imagen completa
-      });
-
-      console.log(`Comprobando ${imagePath}:`, response.status);
-
-      return response.ok; // Si la respuesta es 200, la imagen existe
+      const response = await fetch(imagePath, { method: "HEAD" });
+      return response.ok;
     } catch (error) {
       console.error(`Error al comprobar imagen ${imagePath}:`, error);
-      return false; // Si ocurre algún error, asumimos que la imagen no existe
+      return false;
     }
   };
 
-  // Usamos useEffect para "desenvolver" la promesa y guardar los valores
   useEffect(() => {
     const fetchParams = async () => {
-      const unwrappedParams = await params; // Desenvolvemos la promesa
-      setResolvedParams(unwrappedParams); // Guardamos los valores resueltos
+      const unwrappedParams = await params;
+      setResolvedParams(unwrappedParams);
 
       const { year, projectId } = unwrappedParams;
       const loadedImages: string[] = [];
@@ -46,87 +38,92 @@ export default function ProjectPage({
       let i = 1;
       while (true) {
         const imagePath = `/image/${year}/${projectId}/${i}.webp`;
-
-        // Comprobamos si la imagen existe
         const imageExists = await checkImageExists(imagePath);
 
-        console.log(`Verificando imagen: ${imagePath}, existe: ${imageExists}`);
-
         if (!imageExists) {
-          break; // Si no existe la imagen, salimos del bucle
+          break;
         }
-
         loadedImages.push(imagePath);
         i++;
       }
 
-      // Actualizamos el estado con las imágenes cargadas
       setImages(loadedImages);
     };
 
     fetchParams();
   }, [params]);
 
-  // Mientras `resolvedParams` no tenga valores, mostramos un "loading"
   if (!resolvedParams) {
     return <div>Loading...</div>;
   }
 
-  // Ya podemos acceder a `year` y `projectId` de manera segura
-  const { year, projectId } = resolvedParams;
+  const { projectId, year } = resolvedParams;
 
-  // Función para navegar entre las imágenes
   const nextImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length); // Avanzar a la siguiente imagen
+    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
   };
 
   const prevImage = () => {
     setCurrentImageIndex(
       (prevIndex) => (prevIndex - 1 + images.length) % images.length
-    ); // Volver a la imagen anterior
+    );
   };
 
   return (
-    <main className="text-white">
-      <h1 className="text-3xl font-bold mb-4">
-        Proyecto {projectId} de {year}
-      </h1>
+    <main className="container mx-auto py-10 px-4 sm:px-6 lg:px-8 bg-black text-white">
+      <div className="flex justify-between items-center mb-10 flex-wrap">
+        <div className="flex items-center space-x-4">
+          <Image
+            src="/logo.png"
+            alt="Logo de Proyectos"
+            width={40}
+            height={40}
+            className="opacity-90"
+          />
+          <h2 className="text-2xl sm:text-3xl font-semibold">{year}</h2>
+        </div>
 
-      {/* Carousel */}
-      <div className="relative">
+        <Link
+          href="/"
+          className="text-white uppercase text-lg hover:underline mt-4 sm:mt-0"
+        >
+          VOLVER
+        </Link>
+      </div>
+
+      <div className="relative max-w-5xl mx-auto mb-10">
         <div className="flex justify-center items-center">
-          {/* Imagen principal */}
           {images.length === 0 ? (
-            <p>No hay imágenes disponibles para este proyecto.</p>
+            <p className="text-center">
+              No hay imágenes disponibles para este proyecto.
+            </p>
           ) : (
             <Image
               src={images[currentImageIndex]}
               alt={`Imagen ${currentImageIndex + 1} del Proyecto ${projectId}`}
-              width={800} // Ajusta el tamaño según lo necesites
-              height={500} // Ajusta el tamaño según lo necesites
-              className="rounded-lg shadow-lg"
+              width={700}
+              height={400}
+              className="rounded-lg shadow-lg w-full sm:w-4/5 lg:w-3/4 h-auto mx-auto"
             />
           )}
         </div>
 
-        {/* Controles de navegación */}
-        <div className="absolute top-1/2 left-0 right-0 flex justify-between px-4">
+        <div className="absolute top-1/2 left-0 right-0 flex justify-between px-4 sm:px-8">
           <button
             onClick={prevImage}
-            className="text-white text-2xl bg-black bg-opacity-50 p-2 rounded-full hover:bg-opacity-75 transition"
+            className="text-white text-2xl bg-black bg-opacity-50 p-3 rounded-full hover:bg-opacity-75 transition"
           >
             &#60;
           </button>
           <button
             onClick={nextImage}
-            className="text-white text-2xl bg-black bg-opacity-50 p-2 rounded-full hover:bg-opacity-75 transition"
+            className="text-white text-2xl bg-black bg-opacity-50 p-3 rounded-full hover:bg-opacity-75 transition"
           >
             &#62;
           </button>
         </div>
 
-        {/* Indicador de la imagen */}
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-center text-lg text-white">
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-center text-sm sm:text-lg text-white">
           {currentImageIndex + 1} / {images.length}
         </div>
       </div>

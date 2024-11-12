@@ -43,6 +43,7 @@ export default function Home() {
             alt="Logo de María Torrecillas"
             width={40}
             height={40}
+            style={{ width: "auto", height: "auto" }}
           />
           <h1 className="text-xl sm:text-3xl font-extrabold text-white">
             MARIA TORRECILLAS
@@ -66,8 +67,9 @@ export default function Home() {
                   <Image
                     src={`/image/${year}/1/1.webp`}
                     alt={`Proyectos de ${year}`}
-                    layout="fill"
-                    objectFit="cover"
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
+                    style={{ objectFit: "cover" }}
                     className="transition-opacity group-hover:opacity-90"
                   />
                 </div>

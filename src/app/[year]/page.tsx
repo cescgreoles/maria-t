@@ -1,15 +1,14 @@
-// app/[year]/page.tsx
 import Image from "next/image";
 import Link from "next/link";
 
 type YearProjectsProps = {
   params: {
-    year: string; // Parámetro dinámico para el año
+    year: string;
   };
 };
 
-export default function YearProjects({ params }: YearProjectsProps) {
-  const { year } = params; // Desestructuramos el parámetro year
+export default async function YearProjects({ params }: YearProjectsProps) {
+  const { year } = params; // Await params before destructuring
 
   const yearProjects: Record<string, number> = {
     "2016": 3,
@@ -20,7 +19,7 @@ export default function YearProjects({ params }: YearProjectsProps) {
     "2024": 8,
   };
 
-  const projectCount = yearProjects[year] || 0; // Obtener la cantidad de proyectos para el año
+  const projectCount = yearProjects[year] || 0;
 
   return (
     <main className="container mx-auto py-10 px-4 sm:px-6 lg:px-8 bg-black text-white">
@@ -28,10 +27,10 @@ export default function YearProjects({ params }: YearProjectsProps) {
         <div className="flex items-center space-x-4">
           <Image
             src="/logo.png"
-            alt="Logo de Proyectos"
+            alt="Logo de María Torrecillas"
             width={40}
             height={40}
-            className="opacity-90"
+            style={{ width: "auto", height: "auto" }}
           />
           <h2 className="text-3xl font-semibold">{year}</h2>
         </div>
@@ -52,13 +51,15 @@ export default function YearProjects({ params }: YearProjectsProps) {
             <div className="flex justify-between items-center">
               <div className="flex justify-center">
                 <Link href={`/${year}/${index + 1}`}>
-                  <Image
-                    src={`/image/${year}/${index + 1}/1.webp`}
-                    alt={`Imagen principal del proyecto ${index + 1}`}
-                    width={300}
-                    height={200}
-                    className="rounded-lg"
-                  />
+                  <div className="relative w-[300px] h-[200px]">
+                    <Image
+                      src={`/image/${year}/${index + 1}/1.webp`}
+                      alt={`Imagen principal del proyecto ${index + 1}`}
+                      fill
+                      sizes="300px" // Sets image size to improve performance
+                      className="rounded-lg object-cover"
+                    />
+                  </div>
                 </Link>
               </div>
 
