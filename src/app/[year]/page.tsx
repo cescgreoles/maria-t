@@ -1,14 +1,11 @@
+"use client";
+
+import { useParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 
-type YearProjectsProps = {
-  params: {
-    year: string;
-  };
-};
-
-export default async function YearProjects({ params }: YearProjectsProps) {
-  const { year } = params; // Await params before destructuring
+export default function YearProjects() {
+  const { year } = useParams() as { year: string };
 
   const yearProjects: Record<string, number> = {
     "2016": 3,
@@ -19,7 +16,7 @@ export default async function YearProjects({ params }: YearProjectsProps) {
     "2024": 8,
   };
 
-  const projectCount = yearProjects[year] || 0;
+  const projectCount = year && yearProjects[year] ? yearProjects[year] : 0;
 
   return (
     <main className="container mx-auto py-10 px-4 sm:px-6 lg:px-8 bg-black text-white">
@@ -27,10 +24,10 @@ export default async function YearProjects({ params }: YearProjectsProps) {
         <div className="flex items-center space-x-4">
           <Image
             src="/logo.png"
-            alt="Logo de María Torrecillas"
+            alt="Logo de Proyectos"
             width={40}
             height={40}
-            style={{ width: "auto", height: "auto" }}
+            className="opacity-90"
           />
           <h2 className="text-3xl font-semibold">{year}</h2>
         </div>
@@ -55,9 +52,9 @@ export default async function YearProjects({ params }: YearProjectsProps) {
                     <Image
                       src={`/image/${year}/${index + 1}/1.webp`}
                       alt={`Imagen principal del proyecto ${index + 1}`}
-                      fill
-                      sizes="300px" // Sets image size to improve performance
-                      className="rounded-lg object-cover"
+                      layout="fill"
+                      objectFit="cover" // Asegura el ajuste sin distorsión
+                      className="rounded-lg"
                     />
                   </div>
                 </Link>
