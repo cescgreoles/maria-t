@@ -82,9 +82,8 @@ export default function ProjectPage({
           />
           <h2 className="text-2xl sm:text-3xl font-semibold">{year}</h2>
         </div>
-
         <Link
-          href="/"
+          href={`/${year}`}
           className="text-white uppercase text-lg hover:underline mt-4 sm:mt-0"
         >
           VOLVER
@@ -101,13 +100,14 @@ export default function ProjectPage({
             <Image
               src={images[currentImageIndex]}
               alt={`Imagen ${currentImageIndex + 1} del Proyecto ${projectId}`}
-              width={700}
-              height={400}
-              className="rounded-lg shadow-lg w-full sm:w-4/5 lg:w-3/4 h-auto mx-auto"
+              width={700} // Fixed width
+              height={400} // Fixed height
+              className="rounded-lg shadow-lg w-full sm:w-4/5 lg:w-3/4 h-auto mx-auto object-cover" // Ensure image fills container properly
             />
           )}
         </div>
 
+        {/* Botones de navegación del carrusel */}
         <div className="absolute top-1/2 left-0 right-0 flex justify-between px-4 sm:px-8">
           <button
             onClick={prevImage}
@@ -123,8 +123,17 @@ export default function ProjectPage({
           </button>
         </div>
 
+        {/* Indicador de posición del carrusel */}
         <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-center text-sm sm:text-lg text-white">
           {currentImageIndex + 1} / {images.length}
+        </div>
+
+        {/* Información de Año, Proyecto y Diapositiva en la esquina inferior derecha */}
+        <div className="absolute bottom-3 right-4 text-white text-right fle flex-col items-center justify-center">
+          <p className="text-lg sm:text-xl font-semibold">{year}</p>
+          <p className="text-xs sm:text-sm opacity-80">
+            P{projectId} - {currentImageIndex + 1}
+          </p>
         </div>
       </div>
     </main>

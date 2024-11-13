@@ -20,7 +20,7 @@ export default function Home() {
   }, [backgroundImages.length]);
 
   return (
-    <main className="min-h-screen bg-black flex flex-col relative">
+    <main className="min-h-screen flex flex-col relative">
       <div
         className="absolute top-0 left-0 right-0 bottom-0 bg-cover bg-center transition-all duration-1000"
         style={{
@@ -52,7 +52,7 @@ export default function Home() {
 
         <Link
           href="/contacto"
-          className="text-white text-lg font-medium hover:text-gray-400"
+          className="text-white uppercase text-lg hover:underline"
         >
           CONTACTO
         </Link>
@@ -75,9 +75,7 @@ export default function Home() {
                 </div>
                 <div className="absolute inset-0 bg-black bg-opacity-20 transition-opacity group-hover:bg-opacity-40"></div>
                 <div className="absolute bottom-0 left-0 right-0 p-2 text-center">
-                  <p className="text-lg font-semibold text-white opacity-0 group-hover:opacity-100 transform transition-all group-hover:translate-y-0 translate-y-2">
-                    {year}
-                  </p>
+                  <p className="text-lg font-semibold text-white">{year}</p>
                 </div>
               </div>
             </Link>

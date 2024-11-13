@@ -53,17 +53,15 @@ export default function YearProjects() {
                       src={`/image/${year}/${index + 1}/1.webp`}
                       alt={`Imagen principal del proyecto ${index + 1}`}
                       layout="fill"
-                      objectFit="cover" // Asegura el ajuste sin distorsión
+                      objectFit="cover"
                       className="rounded-lg"
                     />
                   </div>
                 </Link>
               </div>
 
-              <div className="ml-4 text-right">
-                <p className="text-lg">
-                  P-{String(index + 1).padStart(2, "0")}
-                </p>
+              <div className="text-right">
+                <p className="text-lg">P{String(index + 1).padStart(2, "0")}</p>
               </div>
             </div>
           </div>
