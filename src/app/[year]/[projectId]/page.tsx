@@ -16,6 +16,7 @@ export default function ProjectPage({
 
   const [images, setImages] = useState<string[]>([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   const checkImageExists = async (imagePath: string) => {
     try {
@@ -48,13 +49,23 @@ export default function ProjectPage({
       }
 
       setImages(loadedImages);
+      setIsLoading(false); // Set loading to false once images are loaded
     };
 
     fetchParams();
   }, [params]);
 
-  if (!resolvedParams) {
-    return <div>Loading...</div>;
+  if (!resolvedParams || isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen bg-black text-white">
+        <div
+          className="spinner-border animate-spin inline-block w-12 h-12 border-4 border-t-4 border-white rounded-full"
+          role="status"
+        >
+          <span className="sr-only">Loading...</span>
+        </div>
+      </div>
+    );
   }
 
   const { projectId, year } = resolvedParams;
@@ -100,14 +111,13 @@ export default function ProjectPage({
             <Image
               src={images[currentImageIndex]}
               alt={`Imagen ${currentImageIndex + 1} del Proyecto ${projectId}`}
-              width={700} // Fixed width
-              height={400} // Fixed height
+              width={700}
+              height={400}
               className="rounded-lg shadow-lg w-full sm:w-4/5 lg:w-3/4 h-auto mx-auto object-cover" // Ensure image fills container properly
             />
           )}
         </div>
 
-        {/* Botones de navegación del carrusel */}
         <div className="absolute top-1/2 left-0 right-0 flex justify-between px-4 sm:px-8">
           <button
             onClick={prevImage}
@@ -123,12 +133,10 @@ export default function ProjectPage({
           </button>
         </div>
 
-        {/* Indicador de posición del carrusel */}
         <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-center text-sm sm:text-lg text-white">
           {currentImageIndex + 1} / {images.length}
         </div>
 
-        {/* Información de Año, Proyecto y Diapositiva en la esquina inferior derecha */}
         <div className="absolute bottom-3 right-4 text-white text-right fle flex-col items-center justify-center">
           <p className="text-lg sm:text-xl font-semibold">{year}</p>
           <p className="text-xs sm:text-sm opacity-80">

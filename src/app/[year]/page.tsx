@@ -48,13 +48,13 @@ export default function YearProjects() {
             <div className="flex justify-between items-center">
               <div className="flex justify-center">
                 <Link href={`/${year}/${index + 1}`}>
-                  <div className="relative w-[300px] h-[200px]">
+                  <div className="relative w-[300px] h-[200px] overflow-hidden">
                     <Image
                       src={`/image/${year}/${index + 1}/1.webp`}
                       alt={`Imagen principal del proyecto ${index + 1}`}
                       layout="fill"
                       objectFit="cover"
-                      className="rounded-lg"
+                      className="rounded-lg transform transition duration-300 ease-in-out hover:scale-105 hover:shadow-lg"
                     />
                   </div>
                 </Link>
