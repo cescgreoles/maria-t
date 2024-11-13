@@ -22,7 +22,7 @@ export default function Home() {
   return (
     <main className="min-h-screen flex flex-col relative">
       <div
-        className="absolute top-0 left-0 right-0 bottom-0 bg-cover bg-center transition-all duration-1000"
+        className="absolute top-0 left-0 right-0 bottom-0 bg-cover bg-center transition-all"
         style={{
           backgroundImage: `url(${backgroundImages[currentBackground]})`,
         }}
