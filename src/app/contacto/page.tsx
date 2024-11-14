@@ -109,7 +109,7 @@ export default function ContactPage() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
-                  className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-600 placeholder-gray-500 text-gray-100 bg-gray-800 focus:outline-none focus:ring-white focus:border-white sm:text-sm"
+                  className="appearance-none rounded-md relative block w-full px-3 py-2 border  placeholder-gray-300 text-black bg-white focus:outline-none focus:ring-white focus:border-white sm:text-sm"
                   placeholder="Tu nombre"
                 />
               </div>
@@ -127,7 +127,7 @@ export default function ContactPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-600 placeholder-gray-500 text-gray-100 bg-gray-800 focus:outline-none focus:ring-white focus:border-white sm:text-sm"
+                  className="appearance-none rounded-md relative block w-full px-3 py-2 border  placeholder-gray-300 text-black bg-white focus:outline-none focus:ring-white focus:border-white sm:text-sm"
                   placeholder="Tu correo electrónico"
                 />
               </div>
@@ -145,7 +145,7 @@ export default function ContactPage() {
                   onChange={(e) => setMessage(e.target.value)}
                   rows={4}
                   required
-                  className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-600 placeholder-gray-500 text-gray-100 bg-gray-800 focus:outline-none focus:ring-white focus:border-white sm:text-sm"
+                  className="appearance-none rounded-md relative block w-full px-3 py-2 border  placeholder-gray-300 text-black bg-white focus:outline-none focus:ring-white focus:border-white sm:text-sm"
                   placeholder="Tu mensaje"
                 />
               </div>

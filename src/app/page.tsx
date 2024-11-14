@@ -28,7 +28,7 @@ export default function Home() {
       ></div>
 
       <div className="flex flex-col z-10 text-white mt-32 px-6 flex-grow">
-        <p className="text-lg sm:text-xl font-light text-center max-w-3xl italic">
+        <p className="text-lg sm:text-xl font-light  max-w-3xl text-justify italic">
           &quot;Elijo elementos de la naturaleza que por cualquier motivo atraen
           mi interés, escogiendo lo que a menudo nos pasa desapercibido. Para
           sorprender al espectador, hay que transportarlo a un universo
