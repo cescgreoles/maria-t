@@ -29,7 +29,7 @@ export default function YearProjects() {
             height={40}
             className="opacity-90"
           />
-          <h2 className="text-3xl font-semibold">{year}</h2>
+          <h2 className="text-3xl ">{year}</h2>
         </div>
 
         <div>

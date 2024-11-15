@@ -18,6 +18,9 @@ export default function ProjectPage({
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Modal state
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const checkImageExists = async (imagePath: string) => {
     try {
       const response = await fetch(imagePath, { method: "HEAD" });
@@ -80,6 +83,10 @@ export default function ProjectPage({
     );
   };
 
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
   return (
     <main className="container mx-auto py-10 px-4 sm:px-6 lg:px-8 bg-black text-white">
       <div className="flex justify-between items-center mb-10 flex-wrap">
@@ -91,7 +98,7 @@ export default function ProjectPage({
             height={40}
             className="opacity-90"
           />
-          <h2 className="text-2xl sm:text-3xl font-semibold">{year}</h2>
+          <h2 className="text-2xl sm:text-3xl ">{year}</h2>
         </div>
         <Link
           href={`/${year}`}
@@ -113,7 +120,8 @@ export default function ProjectPage({
               alt={`Imagen ${currentImageIndex + 1} del Proyecto ${projectId}`}
               width={700}
               height={400}
-              className="rounded-lg shadow-lg w-full sm:w-4/5 lg:w-3/4 h-auto mx-auto object-cover" // Ensure image fills container properly
+              className="rounded-lg shadow-lg w-full sm:w-4/5 lg:w-3/4 h-auto mx-auto object-cover cursor-pointer"
+              onClick={toggleModal} // Open modal on click
             />
           )}
         </div>
@@ -136,14 +144,26 @@ export default function ProjectPage({
         <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-center text-sm sm:text-lg text-white">
           {currentImageIndex + 1} / {images.length}
         </div>
-
-        <div className="absolute bottom-3 right-4 text-white text-right fle flex-col items-center justify-center">
-          <p className="text-lg sm:text-xl font-semibold">{year}</p>
-          <p className="text-xs sm:text-sm opacity-80">
-            P{projectId} - {currentImageIndex + 1}
-          </p>
-        </div>
       </div>
+
+      {/* Modal for enlarged image */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center">
+          <Image
+            src={images[currentImageIndex]}
+            alt={`Imagen ampliada ${currentImageIndex + 1}`}
+            width={1920}
+            height={1080}
+            className="w-full h-full object-contain"
+          />
+          <button
+            onClick={toggleModal}
+            className="absolute top-5 right-5 text-white text-4xl bg-black bg-opacity-70 p-3 rounded-full hover:bg-opacity-90 transition"
+          >
+            &#x2715;
+          </button>
+        </div>
+      )}
     </main>
   );
 }

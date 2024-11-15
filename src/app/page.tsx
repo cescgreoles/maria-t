@@ -6,7 +6,12 @@ import Link from "next/link";
 
 export default function Home() {
   const years = [2016, 2020, 2021, 2022, 2023, 2024];
-  const backgroundImages = ["/image/2016/1/1.webp", "/image/2016/1/2.webp"];
+  const backgroundImages = [
+    "/image/2016/1/1.webp",
+    "/image/2020/1/1.webp",
+    "/image/2021/1/1.webp",
+    "/image/2022/1/1.webp",
+  ];
 
   const [currentBackground, setCurrentBackground] = useState(0);
 
@@ -27,29 +32,10 @@ export default function Home() {
         }}
       ></div>
 
-      <div className="flex flex-col z-10 text-white mt-32 px-6 flex-grow">
-        <p className="text-lg sm:text-xl font-light  max-w-3xl text-justify italic">
-          &quot;Elijo elementos de la naturaleza que por cualquier motivo atraen
-          mi interés, escogiendo lo que a menudo nos pasa desapercibido. Para
-          sorprender al espectador, hay que transportarlo a un universo
-          imaginario, a otro espacio donde redescubra su mirada. Que pueda ver
-          de otra manera elementos que siempre han estado allí, que descubra la
-          luz y la sombra sobre pequeños detalles que pasan desapercibidos y se
-          conviertan en elementos esenciales&quot;
-        </p>
-      </div>
-
       <div className="flex items-center justify-between px-6 absolute top-6 left-0 right-0 z-10 w-full">
         <div className="flex items-center space-x-4">
-          <Image
-            src="/logo.png"
-            alt="Logo de María Torrecillas"
-            width={40}
-            height={40}
-            style={{ width: "auto", height: "auto" }}
-          />
           <div className="flex flex-col">
-            <h1 className="text-xl sm:text-3xl font-extrabold text-white">
+            <h1 className="text-xl sm:text-3xl  text-white">
               MARIA TORRECILLAS
             </h1>
             <p className="text-white">FOTOGRAFÍA</p>
@@ -64,7 +50,18 @@ export default function Home() {
         </Link>
       </div>
 
-      <div className="flex justify-center mt-32 p-4">
+      <div className="flex items-center justify-center flex-grow z-10">
+        <Link href={`/${years[Math.floor(Math.random() * years.length)]}`}>
+          <Image
+            src="/logo.png"
+            alt="Logo de María Torrecillas"
+            width={50}
+            height={50}
+          />
+        </Link>
+      </div>
+
+      <div className="flex justify-center p-4 z-10">
         <div className="flex flex-wrap justify-center gap-3 w-full max-w-screen-xl">
           {years.map((year) => (
             <Link key={year} href={`/${year}`}>
