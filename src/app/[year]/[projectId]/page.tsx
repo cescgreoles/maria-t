@@ -18,7 +18,6 @@ export default function ProjectPage({
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Modal state
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const checkImageExists = async (imagePath: string) => {
@@ -115,14 +114,17 @@ export default function ProjectPage({
               No hay imágenes disponibles para este proyecto.
             </p>
           ) : (
-            <Image
-              src={images[currentImageIndex]}
-              alt={`Imagen ${currentImageIndex + 1} del Proyecto ${projectId}`}
-              width={700}
-              height={400}
-              className="rounded-lg shadow-lg w-full sm:w-4/5 lg:w-3/4 h-auto mx-auto object-cover cursor-pointer"
-              onClick={toggleModal}
-            />
+            <div className="w-full aspect-[16/9] relative">
+              <Image
+                src={images[currentImageIndex]}
+                alt={`Imagen ${
+                  currentImageIndex + 1
+                } del Proyecto ${projectId}`}
+                fill
+                className="rounded-lg shadow-lg object-cover cursor-pointer"
+                onClick={toggleModal}
+              />
+            </div>
           )}
         </div>
 
@@ -148,13 +150,14 @@ export default function ProjectPage({
 
       {isModalOpen && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center">
-          <Image
-            src={images[currentImageIndex]}
-            alt={`Imagen ampliada ${currentImageIndex + 1}`}
-            width={1920}
-            height={1080}
-            className="w-full h-full object-contain"
-          />
+          <div className="w-full max-w-6xl aspect-[16/9] relative">
+            <Image
+              src={images[currentImageIndex]}
+              alt={`Imagen ampliada ${currentImageIndex + 1}`}
+              fill
+              className="object-contain"
+            />
+          </div>
           <button
             onClick={toggleModal}
             className="absolute top-5 right-5 text-white text-4xl bg-black bg-opacity-70 p-3 rounded-full hover:bg-opacity-90 transition"
