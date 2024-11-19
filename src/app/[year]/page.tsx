@@ -3,6 +3,7 @@
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect } from "react";
 
 export default function YearProjects() {
   const { year } = useParams() as { year: string };
@@ -18,6 +19,21 @@ export default function YearProjects() {
 
   const projectCount = year && yearProjects[year] ? yearProjects[year] : 0;
 
+  useEffect(() => {
+    const preloadImages = (urls: string[]) => {
+      urls.forEach((url) => {
+        const img = new window.Image();
+        img.src = url;
+      });
+    };
+
+    const allImageUrls = Array.from(
+      { length: projectCount },
+      (_, index) => `/image/${year}/${index + 1}/1.webp`
+    );
+    preloadImages(allImageUrls);
+  }, [year, projectCount]);
+
   return (
     <main className="container mx-auto py-10 px-4 sm:px-6 lg:px-8 bg-black text-white">
       <div className="flex justify-between items-center mb-10 flex-wrap">
@@ -29,7 +45,7 @@ export default function YearProjects() {
             height={40}
             className="opacity-90"
           />
-          <h2 className="text-3xl ">{year}</h2>
+          <h2 className="text-3xl">{year}</h2>
         </div>
 
         <div>
@@ -55,6 +71,7 @@ export default function YearProjects() {
                       layout="fill"
                       objectFit="cover"
                       className="rounded-lg transform transition duration-300 ease-in-out hover:scale-105 hover:shadow-lg"
+                      priority={index === 0}
                     />
                   </div>
                 </Link>
