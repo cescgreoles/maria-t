@@ -21,7 +21,7 @@ export default function Home() {
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [backgroundImages.length]);
+  }, []);
 
   return (
     <main className="min-h-screen flex flex-col relative">
@@ -51,14 +51,12 @@ export default function Home() {
       </div>
 
       <div className="flex items-center justify-center flex-grow z-10">
-        <Link href={`/${years[Math.floor(Math.random() * years.length)]}`}>
-          <Image
-            src="/logo.png"
-            alt="Logo de María Torrecillas"
-            width={50}
-            height={50}
-          />
-        </Link>
+        <Image
+          src="/logo.png"
+          alt="Logo de María Torrecillas"
+          width={50}
+          height={50}
+        />
       </div>
 
       <div className="flex justify-center p-4 z-10">

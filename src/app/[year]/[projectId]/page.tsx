@@ -52,7 +52,7 @@ export default function ProjectPage({
       }
 
       setImages(loadedImages);
-      setIsLoading(false); // Set loading to false once images are loaded
+      setIsLoading(false);
     };
 
     fetchParams();
@@ -121,7 +121,7 @@ export default function ProjectPage({
               width={700}
               height={400}
               className="rounded-lg shadow-lg w-full sm:w-4/5 lg:w-3/4 h-auto mx-auto object-cover cursor-pointer"
-              onClick={toggleModal} // Open modal on click
+              onClick={toggleModal}
             />
           )}
         </div>
@@ -146,7 +146,6 @@ export default function ProjectPage({
         </div>
       </div>
 
-      {/* Modal for enlarged image */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center">
           <Image
