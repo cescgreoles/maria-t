@@ -7,10 +7,10 @@ import Link from "next/link";
 export default function Home() {
   const years = [2016, 2020, 2021, 2022, 2023, 2024];
   const backgroundImages = [
-    "/image/2016/1/1.webp",
-    "/image/2020/1/1.webp",
-    "/image/2021/1/1.webp",
-    "/image/2022/1/1.webp",
+    "/image/2022/1/4.webp",
+    "/image/2022/3/3.webp",
+    "/image/2023/1/4.webp",
+    "/image/2024/1/2.webp",
   ];
 
   const [currentBackground, setCurrentBackground] = useState(0);
