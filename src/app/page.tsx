@@ -39,7 +39,7 @@ export default function Home() {
         }}
       ></div>
 
-      <div className="flex items-center justify-between px-6 absolute top-6 left-0 right-0 z-10 w-full">
+      <div className="flex items-center justify-between px-6 absolute top-6 left-0 right-0  w-full">
         <div className="flex items-center space-x-4">
           <div className="flex flex-col">
             <h1 className="text-xl sm:text-3xl text-white">
@@ -48,24 +48,25 @@ export default function Home() {
             <p className="text-white">FOTOGRAFÍA</p>
           </div>
         </div>
+
         <Link
-          href="/contacto"
+          href={"/contact"}
           className="text-white uppercase text-lg border border-white py-1 px-2 transition duration-300 ease-in-out hover:bg-white hover:bg-opacity-20 hover:text-gray-100"
         >
           Contacto
         </Link>
       </div>
 
-      <div className="flex items-center justify-center flex-grow z-10">
-        <Image
+      <div className="flex items-center justify-center flex-grow ">
+        {/* <Image
           src="/logo.png"
           alt="Logo de María Torrecillas"
           width={50}
           height={50}
-        />
+        /> */}
       </div>
 
-      <div className="flex justify-center p-4 z-10">
+      <div className="flex justify-center p-4 ">
         <div className="flex flex-wrap justify-center gap-3 w-full max-w-screen-xl">
           {years.map((year) => (
             <Link key={year} href={`/${year}`}>

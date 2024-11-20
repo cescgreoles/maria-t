@@ -13,9 +13,9 @@ export default function ContactPage() {
   const [error, setError] = useState<string | null>(null);
   const [currentBackground, setCurrentBackground] = useState(0);
 
-  const serviceId = "service_ph7vo6i";
-  const templateId = "template_konc18x";
-  const userId = "02v5LAiTAqxhZvTpB";
+  const serviceId = process.env.NEXT_PUBLIC_SERVICE_ID!;
+  const templateId = process.env.NEXT_PUBLIC_TEMPLATE_ID!;
+  const userId = process.env.NEXT_PUBLIC_USER_ID!;
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -34,7 +34,7 @@ export default function ContactPage() {
     }
   };
 
-  const backgroundImages = ["/image/2016/1/1.webp", "/image/2016/1/2.webp"];
+  const backgroundImages = ["/image/2016/1/1.webp"];
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -62,9 +62,7 @@ export default function ContactPage() {
             height={40}
             className="opacity-90"
           />
-          <h1 className="text-xl sm:text-3xl font-extrabold text-white">
-            CONTACTO
-          </h1>
+          <h1 className="text-xl sm:text-3xl  text-white">CONTACTO</h1>
         </div>
 
         <Link href="/" className="text-white uppercase text-lg hover:underline">
@@ -74,12 +72,7 @@ export default function ContactPage() {
 
       <div className="bg-black bg-opacity-70 backdrop-blur-md p-8 rounded-lg shadow-lg max-w-md mx-auto mt-10">
         <p className="text-center text-gray-200 mb-6">
-          ¿Tienes algún proyecto de fotografía en mente o una consulta? ¡No
-          dudes en escribirme!
-        </p>
-        <p className="text-center text-gray-300 mb-6">
-          Agradecería que me escribieras el número del proyecto al cual te
-          refieres.
+          Estas interesado en alguno de los proyectos? No dudes en contactarme.
         </p>
 
         {submitted ? (
