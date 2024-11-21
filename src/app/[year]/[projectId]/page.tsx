@@ -107,8 +107,8 @@ export default function ProjectPage({
         </Link>
       </div>
 
-      <div className="relative max-w-5xl mx-auto mb-10">
-        <div className="flex justify-center items-center">
+      <div className="relative max-w-5xl mx-auto mb-10 flex">
+        <div className="flex-1 relative">
           {images.length === 0 ? (
             <p className="text-center">
               No hay imágenes disponibles para este proyecto.
@@ -126,25 +126,29 @@ export default function ProjectPage({
               />
             </div>
           )}
+
+          <div className="absolute top-1/2 left-0 right-0 flex justify-between px-4 sm:px-8">
+            <button
+              onClick={prevImage}
+              className="text-white text-2xl bg-black bg-opacity-50 p-3 rounded-full hover:bg-opacity-75 transition"
+            >
+              &#60;
+            </button>
+            <button
+              onClick={nextImage}
+              className="text-white text-2xl bg-black bg-opacity-50 p-3 rounded-full hover:bg-opacity-75 transition"
+            >
+              &#62;
+            </button>
+          </div>
         </div>
 
-        <div className="absolute top-1/2 left-0 right-0 flex justify-between px-4 sm:px-8">
-          <button
-            onClick={prevImage}
-            className="text-white text-2xl bg-black bg-opacity-50 p-3 rounded-full hover:bg-opacity-75 transition"
-          >
-            &#60;
-          </button>
-          <button
-            onClick={nextImage}
-            className="text-white text-2xl bg-black bg-opacity-50 p-3 rounded-full hover:bg-opacity-75 transition"
-          >
-            &#62;
-          </button>
-        </div>
-
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-center text-sm sm:text-lg text-white">
-          {currentImageIndex + 1} / {images.length}
+        <div className="ml-3 flex flex-col justify-between">
+          <div className="mt-auto text-gray-400">
+            <p className="text-sm sm:text-base">
+              {`P${projectId} - F${currentImageIndex + 1}`}
+            </p>
+          </div>
         </div>
       </div>
 
