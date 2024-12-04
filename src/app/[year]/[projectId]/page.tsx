@@ -101,67 +101,64 @@ export default function ProjectPage({
         </div>
         <Link
           href={`/${year}`}
-          className="text-white uppercase text-lg hover:underline mt-4 sm:mt-0"
+          className="text-white uppercase text-xl hover:underline mt-4 sm:mt-0"
         >
           VOLVER
         </Link>
       </div>
 
-      <div className="relative max-w-5xl mx-auto mb-10 flex">
-        <div className="flex-1 relative">
-          {images.length === 0 ? (
-            <p className="text-center">
-              No hay imágenes disponibles para este proyecto.
-            </p>
-          ) : (
-            <div className="w-full aspect-[16/9] relative">
-              <Image
+      <div className="relative max-w-5xl mx-auto">
+        {images.length === 0 ? (
+          <p className="text-center">
+            No hay imágenes disponibles para este proyecto.
+          </p>
+        ) : (
+          <div className="flex flex-col items-center">
+            {/* Imagen tal cual es */}
+            <div className="w-full flex justify-center items-center overflow-hidden">
+              <img
                 src={images[currentImageIndex]}
                 alt={`Imagen ${
                   currentImageIndex + 1
                 } del Proyecto ${projectId}`}
-                fill
-                className="rounded-lg shadow-lg object-cover cursor-pointer"
+                className="max-w-full max-h-[80vh] object-scale-down"
                 onClick={toggleModal}
               />
             </div>
-          )}
 
-          <div className="absolute top-1/2 left-0 right-0 flex justify-between px-4 sm:px-8">
-            <button
-              onClick={prevImage}
-              className="text-white text-2xl bg-black bg-opacity-50 p-3 rounded-full hover:bg-opacity-75 transition"
-            >
-              &#60;
-            </button>
-            <button
-              onClick={nextImage}
-              className="text-white text-2xl bg-black bg-opacity-50 p-3 rounded-full hover:bg-opacity-75 transition"
-            >
-              &#62;
-            </button>
-          </div>
-        </div>
+            {/* Identificador siempre abajo */}
+            <div className="mt-4 text-gray-400 text-center">
+              <p className="text-sm sm:text-base">{`P${projectId} - F${
+                currentImageIndex + 1
+              }`}</p>
+            </div>
 
-        <div className="ml-3 flex flex-col justify-between">
-          <div className="mt-auto text-gray-400">
-            <p className="text-sm sm:text-base">
-              {`P${projectId} - F${currentImageIndex + 1}`}
-            </p>
+            {/* Controles de navegación */}
+            <div className="absolute top-1/2 left-0 right-0 flex justify-between px-4 sm:px-8 -translate-y-1/2">
+              <button
+                onClick={prevImage}
+                className="text-white text-2xl bg-black bg-opacity-50 p-3 rounded-full hover:bg-opacity-75 transition"
+              >
+                &#60;
+              </button>
+              <button
+                onClick={nextImage}
+                className="text-white text-2xl bg-black bg-opacity-50 p-3 rounded-full hover:bg-opacity-75 transition"
+              >
+                &#62;
+              </button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       {isModalOpen && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center">
-          <div className="w-full max-w-6xl aspect-[16/9] relative">
-            <Image
-              src={images[currentImageIndex]}
-              alt={`Imagen ampliada ${currentImageIndex + 1}`}
-              fill
-              className="object-contain"
-            />
-          </div>
+          <img
+            src={images[currentImageIndex]}
+            alt={`Imagen ampliada ${currentImageIndex + 1}`}
+            className="max-w-full max-h-screen object-contain"
+          />
           <button
             onClick={toggleModal}
             className="absolute top-5 right-5 text-white text-4xl bg-black bg-opacity-70 p-3 rounded-full hover:bg-opacity-90 transition"

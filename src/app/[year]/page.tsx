@@ -37,7 +37,6 @@ export default function YearProjects() {
   return (
     <main className="container mx-auto py-10 px-4 sm:px-6 lg:px-8 bg-black text-white">
       <div className="flex justify-between items-center flex-wrap sm:flex-nowrap">
-        {/* Header */}
         <div className="flex items-center space-x-4">
           <Image
             src="/logo.png"
@@ -52,7 +51,7 @@ export default function YearProjects() {
         <div className="mt-4 sm:mt-0">
           <Link
             href="/projects"
-            className="text-white uppercase text-sm sm:text-lg hover:underline"
+            className="text-white uppercase text-xl hover:underline"
           >
             VOLVER
           </Link>
@@ -64,7 +63,6 @@ export default function YearProjects() {
           Selecciona un proyecto para ver más
         </p>
 
-        {/* Projects Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-10">
           {[...Array(projectCount)].map((_, index) => (
             <Link key={index + 1} href={`/${year}/${index + 1}`}>

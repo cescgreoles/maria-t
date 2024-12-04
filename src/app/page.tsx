@@ -48,16 +48,16 @@ export default function Home() {
             <p className="text-white">FOTOGRAFÍA</p>
           </div>
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 items-center sm:items-start">
           <Link
             href={"/contact"}
-            className="text-white uppercase text-lg  py-1 px-2 transition duration-300 ease-in-out hover:underline  hover:bg-opacity-20 hover:text-gray-100"
+            className="text-white uppercase text-sm sm:text-lg py-1 px-3 transition duration-300 ease-in-out hover:underline hover:bg-opacity-20 hover:text-gray-100 "
           >
             Contacto
           </Link>
           <Link
             href={"/projects"}
-            className="text-white uppercase text-lg  py-1 px-2 transition duration-300 ease-in-out hover:underline  hover:bg-opacity-20 hover:text-gray-100"
+            className="text-white uppercase text-sm sm:text-lg py-1 px-3 transition duration-300 ease-in-out hover:underline hover:bg-opacity-20 hover:text-gray-100 "
           >
             Proyectos
           </Link>
