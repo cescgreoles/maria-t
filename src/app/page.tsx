@@ -48,13 +48,20 @@ export default function Home() {
             <p className="text-white">FOTOGRAFÍA</p>
           </div>
         </div>
-
-        <Link
-          href={"/contact"}
-          className="text-white uppercase text-lg border border-white py-1 px-2 transition duration-300 ease-in-out hover:bg-white hover:bg-opacity-20 hover:text-gray-100"
-        >
-          Contacto
-        </Link>
+        <div className="flex flex-col gap-2">
+          <Link
+            href={"/contact"}
+            className="text-white uppercase text-lg  py-1 px-2 transition duration-300 ease-in-out hover:underline  hover:bg-opacity-20 hover:text-gray-100"
+          >
+            Contacto
+          </Link>
+          <Link
+            href={"/projects"}
+            className="text-white uppercase text-lg  py-1 px-2 transition duration-300 ease-in-out hover:underline  hover:bg-opacity-20 hover:text-gray-100"
+          >
+            Proyectos
+          </Link>
+        </div>
       </div>
 
       <div className="flex flex-1 justify-center items-center relative z-10">
