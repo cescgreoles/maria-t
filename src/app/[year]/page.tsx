@@ -38,17 +38,20 @@ export default function YearProjects() {
     <main className="container mx-auto py-10 px-4 sm:px-6 lg:px-8 bg-black text-white">
       <div className="flex justify-between items-center flex-wrap sm:flex-nowrap">
         <div className="flex items-center space-x-4">
-          <Image
-            src="/logo.png"
-            alt="Logo de Proyectos"
-            width={40}
-            height={40}
-            className="opacity-90"
-          />
+          <Link href="/">
+            <Image
+              src="/logo.png"
+              alt="Logo de Proyectos"
+              width={40}
+              height={40}
+              className="opacity-90"
+            />
+          </Link>
+
           <h2 className="text-2xl sm:text-3xl">{year}</h2>
         </div>
 
-        <div className="mt-4 sm:mt-0">
+        <div className="">
           <Link
             href="/projects"
             className="text-white uppercase text-xl hover:underline"

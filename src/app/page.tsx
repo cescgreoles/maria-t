@@ -51,13 +51,13 @@ export default function Home() {
         <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 items-center sm:items-start">
           <Link
             href={"/contact"}
-            className="text-white uppercase text-sm sm:text-lg py-1 px-3 transition duration-300 ease-in-out hover:underline hover:bg-opacity-20 hover:text-gray-100 "
+            className="text-white uppercase text-sm sm:text-lg py-1 px-3 transition duration-300 ease-in-out hover:underline hover:bg-opacity-20 hover:text-gray-100 w-full border border-white "
           >
             Contacto
           </Link>
           <Link
             href={"/projects"}
-            className="text-white uppercase text-sm sm:text-lg py-1 px-3 transition duration-300 ease-in-out hover:underline hover:bg-opacity-20 hover:text-gray-100 "
+            className="text-white uppercase text-sm sm:text-lg py-1 px-3 transition duration-300 ease-in-out hover:underline hover:bg-opacity-20 hover:text-gray-100 w-full border border-white "
           >
             Proyectos
           </Link>

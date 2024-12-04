@@ -90,18 +90,20 @@ export default function ProjectPage({
     <main className="container mx-auto py-10 px-4 sm:px-6 lg:px-8 bg-black text-white">
       <div className="flex justify-between items-center mb-10 flex-wrap">
         <div className="flex items-center space-x-4">
-          <Image
-            src="/logo.png"
-            alt="Logo de Proyectos"
-            width={40}
-            height={40}
-            className="opacity-90"
-          />
+          <Link href="/">
+            <Image
+              src="/logo.png"
+              alt="Logo de Proyectos"
+              width={40}
+              height={40}
+              className="opacity-90"
+            />
+          </Link>
           <h2 className="text-2xl sm:text-3xl ">{year}</h2>
         </div>
         <Link
           href={`/${year}`}
-          className="text-white uppercase text-xl hover:underline mt-4 sm:mt-0"
+          className="text-white uppercase text-xl hover:underline "
         >
           VOLVER
         </Link>
@@ -114,7 +116,6 @@ export default function ProjectPage({
           </p>
         ) : (
           <div className="flex flex-col items-center">
-            {/* Imagen tal cual es */}
             <div className="w-full flex justify-center items-center overflow-hidden">
               <img
                 src={images[currentImageIndex]}
@@ -126,15 +127,13 @@ export default function ProjectPage({
               />
             </div>
 
-            {/* Identificador siempre abajo */}
             <div className="mt-4 text-gray-400 text-center">
               <p className="text-sm sm:text-base">{`P${projectId} - F${
                 currentImageIndex + 1
               }`}</p>
             </div>
 
-            {/* Controles de navegación */}
-            <div className="absolute top-1/2 left-0 right-0 flex justify-between px-4 sm:px-8 -translate-y-1/2">
+            <div className="absolute top-1/2 left-0 right-0 flex justify-between items-center px-4 sm:px-8 -translate-y-1/2">
               <button
                 onClick={prevImage}
                 className="text-white text-2xl bg-black bg-opacity-50 p-3 rounded-full hover:bg-opacity-75 transition"
