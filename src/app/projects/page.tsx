@@ -47,7 +47,7 @@ export default function YearProjects() {
                   alt={`Proyectos de ${year}`}
                   width={300}
                   height={300}
-                  className="rounded-lg transform transition duration-300 ease-in-out hover:scale-105 hover:shadow-lg"
+                  className="transform transition duration-300 ease-in-out hover:scale-105 hover:shadow-lg"
                   style={{ objectFit: "cover" }}
                 />
               </div>

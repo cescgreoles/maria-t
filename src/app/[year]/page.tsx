@@ -14,7 +14,7 @@ export default function YearProjects() {
     "2021": 9,
     "2022": 5,
     "2023": 2,
-    "2024": 8,
+    "2024": 12,
   };
 
   const projectCount = year && yearProjects[year] ? yearProjects[year] : 0;
@@ -37,7 +37,7 @@ export default function YearProjects() {
   return (
     <main className="container mx-auto py-10 px-4 sm:px-6 lg:px-8 bg-black text-white">
       <div className="flex justify-between items-center flex-wrap sm:flex-nowrap">
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-4 ">
           <Link href="/">
             <Image
               src="/logo.png"
@@ -79,7 +79,7 @@ export default function YearProjects() {
                   alt={`Proyecto ${index + 1} de ${year}`}
                   width={300}
                   height={300}
-                  className="rounded-lg transform transition duration-300 ease-in-out hover:scale-105 hover:shadow-lg"
+                  className="transform transition duration-300 ease-in-out hover:scale-105 hover:shadow-lg"
                   style={{ objectFit: "cover" }}
                 />
               </div>
