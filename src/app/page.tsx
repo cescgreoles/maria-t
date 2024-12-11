@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
-  const years = [2016, 2020, 2021, 2022, 2023, 2024];
+  const years = [2019, 2020, 2021, 2022, 2023, 2024];
   const backgroundImages = [
     "/image/2022/1/4.webp",
     "/image/2022/3/3.webp",
