@@ -9,7 +9,7 @@ export default function YearProjects() {
   const { year } = useParams() as { year: string };
 
   const yearProjects: Record<string, number> = {
-    "2016": 3,
+    "2019": 3,
     "2020": 2,
     "2021": 9,
     "2022": 5,

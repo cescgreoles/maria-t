@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function YearProjects() {
-  const years = [2016, 2020, 2021, 2022, 2023, 2024];
+  const years = [2019, 2020, 2021, 2022, 2023, 2024];
 
   return (
     <main className="container mx-auto py-10 px-4 sm:px-6 lg:px-8 bg-black text-white">
