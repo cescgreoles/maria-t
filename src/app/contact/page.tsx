@@ -56,11 +56,14 @@ export default function Home() {
 
       <div className="flex flex-col md:flex-row items-center justify-center mt-24 px-6 py-12 md:space-x-12 w-full max-w-7xl mx-auto">
         <div className="text-white md:w-1/2 mb-6 md:mb-0">
-          <h3 className="text-xl md:text-2xl font-bold mb-4">¡Contáctanos!</h3>
           <p className="text-sm md:text-base leading-relaxed">
-            Si tienes alguna consulta, duda o comentario, no dudes en
-            escribirnos. Nuestro equipo estará encantado de ayudarte y darte la
-            mejor atención posible. Tu opinión es importante para nosotros.
+            Elijo elementos de la naturaleza que por cualquier motivo atraen mi
+            interés, escogiendo lo que a menudo nos pasa desapercibido. Para
+            sorprender al espectador, hay que transportarlo a un universo
+            imaginario, a otro espacio donde redescubra su mirada. Que pueda ver
+            de otra manera elementos que siempre han estado allí, que descubra
+            la luz y la sombra sobre pequeños detalles que pasan desapercibidos
+            y se conviertan en elementos esenciales.
           </p>
         </div>
 
